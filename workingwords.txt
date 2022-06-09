@@ -11,6 +11,8 @@ ar
 rl
 tr
 lp
+re
+ew
 ---ended here---
 in
 it
