@@ -1,5 +1,15 @@
 const DEBUG = process.env.DEBUG
 let fullBoard = ''
+/**
+ * For the passed solution, find the final two characters, which is the current word in question.
+ * Remove that word from the board, and check if another word can continue the game.
+ * If there is no next word, or the game is solved, return the current solution.
+ * If there is a next word, append to the solution and call `playGame()` again.
+ * @param {string} solution the current solution string in the format `word -> word -> word ....`
+ * @param {string} remainingBoard the letters of the full board that have not been used
+ * @param {*} remainingWords the words still available to use
+ * @returns object { solution: string, remainingBoard: string }
+ */
 function playGame(solution, remainingBoard, remainingWords) {
   // start with the current solution.
   let first = solution[solution.length - 2]
@@ -22,6 +32,13 @@ function playGame(solution, remainingBoard, remainingWords) {
   return { solution, remainingBoard }
 }
 
+/**
+ * Checks for a solution for every word in words. The minimum solution
+ * is the word itself.
+ * @param {string[]} words
+ * @param {string[]} sides the 4 sides of the game board
+ * @returns an object[], where each object { solution: string, remainingBoard: string} has the furthest solution possible, and the remaining board when the game ended.
+ */
 exports.default = function (words, sides) {
   fullBoard = sides.join('')
   // for each word, create a new game board and play. If it succeeds, winning word!

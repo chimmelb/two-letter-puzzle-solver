@@ -1,4 +1,11 @@
 const DEBUG = process.env.DEBUG
+/**
+ * Filter the given two letter words to only those that could
+ * possibly exist in the game.
+ * @param {string[]} words all the 2-letter words from the dictionary
+ * @param {string[]} sides the 4 sides of the gameboard
+ * @returns a string[] of words that are in the game board
+ */
 exports.findPotentials = function (words, sides) {
   // find potential matches - brute force style
   // for each potential word,
@@ -16,10 +23,15 @@ exports.findPotentials = function (words, sides) {
     return true //both letters are in the game board. Keep going.
   })
 }
+/**
+ * Filter the given array of words to follow the rules of the game
+ *   1. no two letters in a row
+ *   2. no two letter in the same side
+ * @param {string[]} words the words that could exist on the game board
+ * @param {string[]} sides the 4 sides of the game board
+ * @returns a string[] of valid words
+ */
 exports.checkAnswers = function (words, sides) {
-  // rules of the game.
-  //  1. no two letters in a row
-  //  2. no two letter in the same side
   return words.filter((w) => {
     // this is only a two letter word
     let first = w[0]
