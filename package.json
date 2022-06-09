@@ -1,0 +1,15 @@
+{
+  "name": "mfj",
+  "version": "1.0.0",
+  "description": "a little homework assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chimmelb",
+  "license": "UNLICENSED",
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  }
+}
