@@ -4,7 +4,7 @@ exports.default = async function () {
   let filename = process.argv[3] || 'words.txt'
   const filepath = path.resolve(__dirname, filename)
 
-  const LENGTH = 2 // this only finds 2-letter words for a solution
+  const LENGTH = 3 // this only finds 3-letter words for a solution
   console.log(`Reading words.txt looking for ${LENGTH} letter words`)
   // read the file. This could be streamed if very large.
   const wordsStr = await fs.promises.readFile(filepath, 'utf8')

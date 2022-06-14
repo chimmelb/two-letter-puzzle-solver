@@ -1,3 +1,4 @@
+const DEBUG = process.env.DEBUG
 const parseFile = require('./parseFile').default
 const { findPotentials, checkAnswers } = require('./answerSearch.js')
 const playGame = require('./playGame.js').default
@@ -26,12 +27,9 @@ const playGame = require('./playGame.js').default
   console.log(`${results}`)
 
   console.log('\nPlay the game')
-  let potentialSolutions = playGame(results, sides)
-  // Each potential word has its best solution attached.
-  // Look for those that cleared the game board.
-  let solutions = potentialSolutions.filter((solution) => solution.remainingBoard.length === 0)
-  console.log(`Complete. There ${solutions.length === 1 ? 'was' : 'were'} ${solutions.length} solution${solutions.length > 1 ? 's' : ''}`)
-  if (solutions.length) {
-    solutions.forEach((s) => console.log(s.solution))
-  }
+  let solution = playGame(results)
+  let total = 0
+  for (let key in solution) total += solution[key].length
+  console.log(`Complete. Found ${total} solution pairs.`)
+  !DEBUG || console.log(JSON.stringify(solution, null, 2))
 })()

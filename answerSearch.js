@@ -1,8 +1,8 @@
 const DEBUG = process.env.DEBUG
 /**
- * Filter the given two letter words to only those that could
+ * Filter the given three letter words to only those that could
  * possibly exist in the game.
- * @param {string[]} words all the 2-letter words from the dictionary
+ * @param {string[]} words all the 3-letter words from the dictionary
  * @param {string[]} sides the 4 sides of the gameboard
  * @returns a string[] of words that are in the game board
  */
@@ -36,12 +36,13 @@ exports.checkAnswers = function (words, sides) {
     // this is only a two letter word
     let first = w[0]
     let second = w[1]
-    if (first === second) {
+    let third = w[2]
+    if (first === second || second === third) {
       !DEBUG || console.log(`\t${w} has duplicate letters`)
       return false
     }
     for (let side of sides) {
-      if (side.includes(first) && side.includes(second)) {
+      if ((side.includes(first) && side.includes(second)) || (side.includes(third) && side.includes(second))) {
         !DEBUG || console.log(`\t${w} is found only on one side: ${side}`)
         return false
       }
