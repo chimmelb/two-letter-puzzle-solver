@@ -30,6 +30,10 @@ const playGame = require('./playGame.js').default
   let solution = playGame(results)
   let total = 0
   for (let key in solution) total += solution[key].length
-  console.log(`Complete. Found ${total} solution pairs.`)
-  !DEBUG || console.log(JSON.stringify(solution, null, 2))
+  console.log(`Complete. Found ${total} solution pairs. Here are 3 random pair sets`)
+  let startingWords = Object.keys(solution)
+  for (let i = 0; i < 3; i++) {
+    let idx = Math.floor(Math.random() * startingWords.length)
+    console.log(`\nfirst: ${startingWords[idx]}, second pairs: ${solution[startingWords[idx]]}`)
+  }
 })()

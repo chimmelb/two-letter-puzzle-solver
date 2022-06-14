@@ -33,18 +33,18 @@ exports.findPotentials = function (words, sides) {
  */
 exports.checkAnswers = function (words, sides) {
   return words.filter((w) => {
-    // this is only a two letter word
-    let first = w[0]
-    let second = w[1]
-    let third = w[2]
-    if (first === second || second === third) {
-      !DEBUG || console.log(`\t${w} has duplicate letters`)
-      return false
-    }
-    for (let side of sides) {
-      if ((side.includes(first) && side.includes(second)) || (side.includes(third) && side.includes(second))) {
-        !DEBUG || console.log(`\t${w} is found only on one side: ${side}`)
+    for (let ii = 1; ii < w.length - 1; ii++) {
+      let first = w[ii - 1]
+      let second = w[ii]
+      if (first === second) {
+        !DEBUG || console.log(`\t${w} has duplicate letters`)
         return false
+      }
+      for (let side of sides) {
+        if (side.includes(first) && side.includes(second)) {
+          !DEBUG || console.log(`\t${w} is found with two consecutive letters only on one side: ${side}`)
+          return false
+        }
       }
     }
     return true
