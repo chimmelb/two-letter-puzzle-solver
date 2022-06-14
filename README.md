@@ -1,6 +1,6 @@
 # two-letter-puzzle-solver
 
-This is personal project to solve a letter puzzle using only 2-letter words from provided dictionary.
+This is personal project to solve a letter puzzle for pairs of words that complete the puzzle.
 
 ## Install
 
@@ -24,19 +24,48 @@ If the environment variable `DEBUG` is present, the program will spew forth extr
 
 ## Approach
 
-This project is fairly straight forward, with a bit of recursion to find a solution.
+This project is fairly straight forward.
 
 1. `index.js` This is the main function of the program and calls on the other files here.
-1. `parseFile.js` This function is used to parse the dictionary file, returning only 2-letter words.
-1. `answerSearch.js` Of all the words returned, only some will be relevant to the current game. First the words that exist within the gameboard are found (using `function findPotentials()`), then those words are checked for doubles, and appearing on the same side (using `function checkAnswers()`)
-1. `playGame.js` The guts of the algorithm. The default function runs the algorithm against every potential word. The algorithm builds a solution while removing matched letters from the full game board. It will either:
-     1. Solve the board, returning a successful solution with no remaining characters on the board.
-     1. Search for the next word that continues the solution ("last letter of word starts the next"). If there is no next word, the solution ends. If there is a next word, the algorithm is called recursively with the next word on the end of the solution.
+1. `parseFile.js` This function is used to parse the dictionary file, returning only words that are > 2 letters.
+1. `answerSearch.js` Of all the words returned, only some will be relevant to the current game. First the words that exist within the gameboard are found (using `function findPotentials()`), then those words are checked for doubles, and consecutive letters appearing on the same side (using `function checkAnswers()`)
+1. `playGame.js` It simply looks at every starting word, and finds any matches in the other words that end with its last letter. This also checks the pair to see if it solves the puzzle. These are stored in an array, which are the values of the soution JSON object (a Map) where the key is the starting word.
 
 ## Thoughts
 
-From the given dictionary and sample game board, there was no solution. I included a changed dictionary that has a solution. That can be run with:
+> `node index.js RME,WCL,KGT,IPA`
 
-> `node index.js RME,WCL,KGT,IPA workingwords.txt`
+I misread this entire program the first time. See my commit history if you're intested in another program (there's recursion, if you're into that sort of thing : )
 
-This solution presented only finds one working solution for each starter word. If there were two choices of "next word", only the first is searched. This could lead to no solution or sub-optimal solutions. Exploring the full solution tree would be the only way to know. A pathing algorithm like depth first ('A\*') could be used to find the shortest solution, if there was one.
+Here is the final output of this program using the above input.
+
+```
+Board sides: rme  wcl  kgt  ipa
+Reading words.txt looking for >2 length letter words
+Found 154497 matching words. First 5: ltd,doa,etc,hew,vex
+        Results are in. There are 857 answers.
+
+Play the game
+Complete. Found 7 solution pairs.
+{
+  "wigwam": [
+    "marketplace"
+  ],
+  "pragmatic": [
+    "cakewalk",
+    "crackleware"
+  ],
+  "marketplace": [
+    "earwig"
+  ],
+  "pragmatical": [
+    "lawmaker",
+    "lieawake"
+  ],
+  "practicegame": [
+    "epkwele"
+  ]
+}
+```
+
+Sorry this was not done in Java. An Object Oriented approad might have had objects like "Word", "GameBoard", "Parser"  and "Solver". Parser would have read a file and created many potential Word objects. Solver would have had the methods used in index.js like `Solver.findPotentialAnswers(Word[] words)` or `Solver.playGame(Word[] words, GameBoard board)`. (I would have missed the built in JavaScript array functions like `.every()` and `.filter()`).
