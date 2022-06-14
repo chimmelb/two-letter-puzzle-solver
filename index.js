@@ -18,22 +18,18 @@ const playGame = require('./playGame.js').default
   console.log(`Found ${words.length} matching words. First 5: ${words.slice(0, 5)}`)
 
   // filter out only words that could be part of the solution.
-  console.log('\nFind valid words in this game board')
-  console.log('\tFinding potential matches in game board.')
+  !DEBUG || console.log('\nFind valid words in this game board')
+  !DEBUG || console.log('\tFinding potential matches in game board.')
   let potentials = findPotentials(words, sides)
-  console.log(`\tFound ${potentials.length} potential words. Comfirming answers.`)
+  !DEBUG || console.log(`\tFound ${potentials.length} potential words. Comfirming answers.`)
   let results = checkAnswers(potentials, sides)
-  console.log(`Results are in. There are ${results.length} answers.`)
-  console.log(`${results}`)
+  console.log(`\tResults are in. There are ${results.length} answers.`)
+  !DEBUG || console.log(`${results}`)
 
   console.log('\nPlay the game')
-  let solution = playGame(results)
+  let solution = playGame(results, sides)
   let total = 0
   for (let key in solution) total += solution[key].length
-  console.log(`Complete. Found ${total} solution pairs. Here are 3 random pair sets`)
-  let startingWords = Object.keys(solution)
-  for (let i = 0; i < 3; i++) {
-    let idx = Math.floor(Math.random() * startingWords.length)
-    console.log(`\nfirst: ${startingWords[idx]}, second pairs: ${solution[startingWords[idx]]}`)
-  }
+  console.log(`Complete. Found ${total} solution pairs.`)
+  console.log(JSON.stringify(solution, null, 2))
 })()
