@@ -30,13 +30,13 @@ This project is fairly straight forward, with a bit of recursion to find a solut
 1. `parseFile.js` This function is used to parse the dictionary file, returning only 2-letter words.
 1. `answerSearch.js` Of all the words returned, only some will be relevant to the current game. First the words that exist within the gameboard are found (using `function findPotentials()`), then those words are checked for doubles, and appearing on the same side (using `function checkAnswers()`)
 1. `playGame.js` The guts of the algorithm. The default function runs the algorithm against every potential word. The algorithm builds a solution while removing matched letters from the full game board. It will either:
-1. Solve the board, returning a successful solution with no remaining characters on the board.
-1. Search for the next word that continues the solution ("last letter of word starts the next"). If there is no next work, the solution ends. If there is a next word, the algorithm is called recursively with the next word on the end of the solution.
+     1. Solve the board, returning a successful solution with no remaining characters on the board.
+     1. Search for the next word that continues the solution ("last letter of word starts the next"). If there is no next word, the solution ends. If there is a next word, the algorithm is called recursively with the next word on the end of the solution.
 
 ## Thoughts
 
-From the given dictionary and sample game board, there was no solution! I included a changed dictionary that has one solution. That can be run with:
+From the given dictionary and sample game board, there was no solution. I included a changed dictionary that has a solution. That can be run with:
 
 > `node index.js RME,WCL,KGT,IPA workingwords.txt`
 
-This solution only finds one working solution for each starter word. If there were two choices of "next word", the first is used. This could lead to no solution or sub-optimal solutions. Exploring the full solution tree would be the only way to know. A pathing algorithm like depth first ('A\*') could be used to find the shortest solution, if there was one.
+This solution presented only finds one working solution for each starter word. If there were two choices of "next word", only the first is searched. This could lead to no solution or sub-optimal solutions. Exploring the full solution tree would be the only way to know. A pathing algorithm like depth first ('A\*') could be used to find the shortest solution, if there was one.
